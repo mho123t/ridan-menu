@@ -134,10 +134,35 @@
             font-size: 0.9rem;
         }
 
+        .rice-options {
+            margin: 10px 0;
+            border-top: 1px dashed #ddd;
+            padding-top: 10px;
+        }
+
+        .rice-option {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+
+        .extras {
+            margin: 10px 0;
+            border-top: 1px dashed #ddd;
+            padding-top: 10px;
+        }
+
+        .extra-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+
         .menu-item-price {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 10px;
         }
 
         .price {
@@ -327,7 +352,7 @@
             <button class="category-btn" data-category="chicken">وجبات الدجاج</button>
             <button class="category-btn" data-category="mutton">وجبات اللحم</button>
             <button class="category-btn" data-category="sheep">وجبات الغنم الكاملة</button>
-            <button class="category-btn" data-category="drinks">المشروبات</button>
+            <button class="category-btn" data-category="drinks">المشروبات والإضافات</button>
         </div>
 
         <div class="menu-items" id="menu-items">
@@ -363,67 +388,107 @@
                 {
                     id: 1,
                     name: "دجاج مظلي",
-                    description: "وجبة دجاج مظلي لذيذة",
+                    description: "وجبة دجاج مظلي لذيذة مع خيارات الأرز",
                     price: 33,
                     category: "chicken",
-                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    riceOptions: [
+                        { name: "رز مندي (إفتراضي)", price: 0 },
+                        { name: "رز كبسة", price: 5 },
+                        { name: "رز نص كبسة نص مندي", price: 3 }
+                    ]
                 },
                 {
                     id: 2,
                     name: "دجاج مندي",
-                    description: "وجبة دجاج مندي تقليدية",
+                    description: "وجبة دجاج مندي تقليدية مع خيارات الأرز",
                     price: 33,
                     category: "chicken",
-                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    riceOptions: [
+                        { name: "رز مندي (إفتراضي)", price: 0 },
+                        { name: "رز كبسة", price: 5 },
+                        { name: "رز نص كبسة نص مندي", price: 3 }
+                    ]
                 },
                 {
                     id: 3,
                     name: "دجاج كبسة",
-                    description: "وجبة دجاج كبسة شهية",
+                    description: "وجبة دجاج كبسة شهية مع خيارات الأرز",
                     price: 35,
                     category: "chicken",
-                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    riceOptions: [
+                        { name: "رز كبسة (إفتراضي)", price: 0 },
+                        { name: "رز مندي", price: 5 },
+                        { name: "رز نص كبسة نص مندي", price: 3 }
+                    ]
                 },
                 {
                     id: 4,
                     name: "دجاج حنيذ",
-                    description: "وجبة دجاج حنيذ مميزة",
+                    description: "وجبة دجاج حنيذ مميزة مع خيارات الأرز",
                     price: 35,
                     category: "chicken",
-                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    riceOptions: [
+                        { name: "رز مندي (إفتراضي)", price: 0 },
+                        { name: "رز كبسة", price: 5 },
+                        { name: "رز نص كبسة نص مندي", price: 3 }
+                    ]
                 },
                 // وجبات اللحم
                 {
                     id: 5,
                     name: "لحم بخاري",
-                    description: "وجبة لحم بخاري مميزة",
+                    description: "وجبة لحم بخاري مميزة مع خيارات الأرز",
                     price: 50,
                     category: "mutton",
-                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    riceOptions: [
+                        { name: "رز بخاري (إفتراضي)", price: 0 },
+                        { name: "رز كبسة", price: 5 },
+                        { name: "رز نص كبسة نص مندي", price: 3 }
+                    ]
                 },
                 {
                     id: 6,
                     name: "لحم مكبوس",
-                    description: "وجبة لحم مكبوس شهية",
+                    description: "وجبة لحم مكبوس شهية مع خيارات الأرز",
                     price: 60,
                     category: "mutton",
-                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    riceOptions: [
+                        { name: "رز مكبوس (إفتراضي)", price: 0 },
+                        { name: "رز كبسة", price: 5 },
+                        { name: "رز نص كبسة نص مندي", price: 3 }
+                    ]
                 },
                 {
                     id: 7,
                     name: "لحم هاشي",
-                    description: "وجبة لحم هاشي لذيذة",
+                    description: "وجبة لحم هاشي لذيذة مع خيارات الأرز",
                     price: 60,
                     category: "mutton",
-                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    riceOptions: [
+                        { name: "رز هاشي (إفتراضي)", price: 0 },
+                        { name: "رز كبسة", price: 5 },
+                        { name: "رز نص كبسة نص مندي", price: 3 }
+                    ]
                 },
                 {
                     id: 8,
                     name: "لحم معصج",
-                    description: "وجبة لحم معصج مميزة",
+                    description: "وجبة لحم معصج مميزة مع خيارات الأرز",
                     price: 60,
                     category: "mutton",
-                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60",
+                    riceOptions: [
+                        { name: "رز معصج (إفتراضي)", price: 0 },
+                        { name: "رز كبسة", price: 5 },
+                        { name: "رز نص كبسة نص مندي", price: 3 }
+                    ]
                 },
                 // وجبات الغنم الكاملة
                 {
@@ -458,10 +523,10 @@
                     category: "sheep",
                     image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
-                // المشروبات
+                // المشروبات والإضافات
                 {
                     id: 13,
-                    name: "رز مندي",
+                    name: "رز مندي إضافي",
                     description: "رز مندي إضافي",
                     price: 11,
                     category: "drinks",
@@ -490,6 +555,31 @@
                     price: 4,
                     category: "drinks",
                     image: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                // الإضافات
+                {
+                    id: 17,
+                    name: "بصل محروق",
+                    description: "إضافة بصل محروق",
+                    price: 3,
+                    category: "drinks",
+                    image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 18,
+                    name: "زبيب",
+                    description: "إضافة زبيب",
+                    price: 3,
+                    category: "drinks",
+                    image: "https://images.unsplash.com/photo-1603569283847-aa295f0d016a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 19,
+                    name: "بصل أبيض",
+                    description: "إضافة بصل أبيض",
+                    price: 2,
+                    category: "drinks",
+                    image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 }
             ];
 
@@ -521,11 +611,50 @@
                 filteredItems.forEach(item => {
                     const itemElement = document.createElement('div');
                     itemElement.className = 'menu-item';
+                    
+                    let riceOptionsHTML = '';
+                    if (item.riceOptions) {
+                        riceOptionsHTML = `
+                            <div class="rice-options">
+                                <h4>خيارات الأرز:</h4>
+                                ${item.riceOptions.map(option => `
+                                    <div class="rice-option">
+                                        <span>${option.name}</span>
+                                        <span>${option.price > 0 ? `+${option.price} AED` : 'مجاناً'}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+                    
+                    let extrasHTML = '';
+                    if (item.category === 'chicken' || item.category === 'mutton') {
+                        extrasHTML = `
+                            <div class="extras">
+                                <h4>إضافات:</h4>
+                                <div class="extra-item">
+                                    <span>بصل محروق</span>
+                                    <span>+3 AED</span>
+                                </div>
+                                <div class="extra-item">
+                                    <span>زبيب</span>
+                                    <span>+3 AED</span>
+                                </div>
+                                <div class="extra-item">
+                                    <span>بصل أبيض</span>
+                                    <span>+2 AED</span>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
                     itemElement.innerHTML = `
                         <img src="${item.image}" alt="${item.name}">
                         <div class="menu-item-content">
                             <h3>${item.name}</h3>
                             <p>${item.description}</p>
+                            ${riceOptionsHTML}
+                            ${extrasHTML}
                             <div class="menu-item-price">
                                 <span class="price">${item.price} AED</span>
                                 <button class="add-to-cart" data-id="${item.id}">إضافة للسلة</button>
@@ -536,23 +665,29 @@
                 });
 
                 document.querySelectorAll('.add-to-cart').forEach(button => {
-                    button.addEventListener('click', addToCart);
+                    button.addEventListener('click', function() {
+                        const itemId = parseInt(this.getAttribute('data-id'));
+                        const item = menuItems.find(item => item.id === itemId);
+                        
+                        // يمكنك هنا إضافة منطق لاختيار خيارات الأرز والإضافات
+                        // حالياً سنضيف العنصر الأساسي فقط
+                        addToCart(item);
+                    });
                 });
             }
 
             // إضافة عنصر للسلة
-            function addToCart(e) {
-                const itemId = parseInt(e.target.getAttribute('data-id'));
-                const item = menuItems.find(item => item.id === itemId);
-                
-                const existingItem = cart.find(cartItem => cartItem.id === itemId);
+            function addToCart(item) {
+                const existingItem = cart.find(cartItem => cartItem.id === item.id);
                 
                 if (existingItem) {
                     existingItem.quantity += 1;
                 } else {
                     cart.push({
                         ...item,
-                        quantity: 1
+                        quantity: 1,
+                        selectedRiceOption: item.riceOptions ? item.riceOptions[0] : null,
+                        extras: []
                     });
                 }
                 
@@ -572,14 +707,30 @@
                 let total = 0;
                 
                 cart.forEach(item => {
-                    const itemTotal = item.price * item.quantity;
+                    let itemTotal = item.price * item.quantity;
+                    let itemDetails = item.name;
+                    
+                    // إضافة سعر خيار الأرز إذا كان موجوداً
+                    if (item.selectedRiceOption && item.selectedRiceOption.price > 0) {
+                        itemTotal += item.selectedRiceOption.price * item.quantity;
+                        itemDetails += ` (${item.selectedRiceOption.name})`;
+                    }
+                    
+                    // إضافة سعر الإضافات إذا كانت موجودة
+                    if (item.extras && item.extras.length > 0) {
+                        item.extras.forEach(extra => {
+                            itemTotal += extra.price * item.quantity;
+                            itemDetails += ` + ${extra.name}`;
+                        });
+                    }
+                    
                     total += itemTotal;
                     
                     const itemElement = document.createElement('div');
                     itemElement.className = 'order-item';
                     itemElement.innerHTML = `
                         <div class="order-item-info">
-                            <span>${item.name}</span>
+                            <span>${itemDetails}</span>
                             <div class="order-item-quantity">
                                 <button class="quantity-btn minus" data-id="${item.id}">-</button>
                                 <span>${item.quantity}</span>
@@ -664,11 +815,41 @@
                 let itemsText = '';
                 
                 cart.forEach(item => {
-                    orderDetails += `<li>${item.name} - ${item.quantity} × ${item.price} AED = ${item.quantity * item.price} AED</li>`;
-                    itemsText += `- ${item.name} (${item.quantity} × ${item.price} AED)\n`;
+                    let itemDetails = item.name;
+                    let itemPrice = item.price;
+                    
+                    if (item.selectedRiceOption && item.selectedRiceOption.price > 0) {
+                        itemDetails += ` (${item.selectedRiceOption.name})`;
+                        itemPrice += item.selectedRiceOption.price;
+                    }
+                    
+                    if (item.extras && item.extras.length > 0) {
+                        item.extras.forEach(extra => {
+                            itemDetails += ` + ${extra.name}`;
+                            itemPrice += extra.price;
+                        });
+                    }
+                    
+                    orderDetails += `<li>${itemDetails} - ${item.quantity} × ${itemPrice} AED = ${item.quantity * itemPrice} AED</li>`;
+                    itemsText += `- ${itemDetails} (${item.quantity} × ${itemPrice} AED)\n`;
                 });
                 
-                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const total = cart.reduce((sum, item) => {
+                    let itemPrice = item.price;
+                    
+                    if (item.selectedRiceOption) {
+                        itemPrice += item.selectedRiceOption.price;
+                    }
+                    
+                    if (item.extras && item.extras.length > 0) {
+                        item.extras.forEach(extra => {
+                            itemPrice += extra.price;
+                        });
+                    }
+                    
+                    return sum + (itemPrice * item.quantity);
+                }, 0);
+                
                 orderDetails += `</ul><p><strong>المجموع: ${total.toFixed(2)} AED</strong></p>`;
                 orderDetails += `<p>شكراً لطلبك! سيتم تقديم طلبك قريباً.</p>`;
                 
