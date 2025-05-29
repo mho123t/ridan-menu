@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Raidan - قائمة الطعام</title>
+    <title>قائمة طعام مطعم ريدان المندي</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
@@ -303,7 +303,7 @@
 <body>
     <div class="container">
         <header>
-            <div class="logo">🍽️ Menu Raidan</div>
+            <div class="logo">🍽️ ريدان المندي</div>
             <h1>قائمة الطعام الإلكترونية</h1>
             <div class="table-number">
                 <label for="table">رقم الطاولة:</label>
@@ -324,9 +324,9 @@
 
         <div class="menu-categories">
             <button class="category-btn active" data-category="all">الكل</button>
-            <button class="category-btn" data-category="appetizers">المقبلات</button>
-            <button class="category-btn" data-category="main">الوجبات الرئيسية</button>
-            <button class="category-btn" data-category="desserts">الحلويات</button>
+            <button class="category-btn" data-category="chicken">وجبات الدجاج</button>
+            <button class="category-btn" data-category="mutton">وجبات اللحم</button>
+            <button class="category-btn" data-category="sheep">وجبات الغنم الكاملة</button>
             <button class="category-btn" data-category="drinks">المشروبات</button>
         </div>
 
@@ -339,7 +339,7 @@
             <div id="order-items"></div>
             <div class="total">
                 <span>المجموع:</span>
-                <span id="total-amount">0.00 ر.س</span>
+                <span id="total-amount">0.00 AED</span>
             </div>
             <button id="submit-order" class="submit-btn">تأكيد الطلب</button>
         </div>
@@ -357,55 +357,139 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // بيانات القائمة
+            // بيانات القائمة حسب الملف المرفق
             const menuItems = [
+                // وجبات الدجاج
                 {
                     id: 1,
-                    name: "سلطة يونانية",
-                    description: "خيار، طماطم، بصل أحمر، زيتون، جبنة فيتا مع صلصة الليمون",
-                    price: 25,
-                    category: "appetizers",
-                    image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    name: "دجاج مظلي",
+                    description: "وجبة دجاج مظلي لذيذة",
+                    price: 33,
+                    category: "chicken",
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     id: 2,
-                    name: "باستا ألفريدو",
-                    description: "باستا مع صلصة ألفريدو الكريمية والفطر",
-                    price: 45,
-                    category: "main",
-                    image: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    name: "دجاج مندي",
+                    description: "وجبة دجاج مندي تقليدية",
+                    price: 33,
+                    category: "chicken",
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     id: 3,
-                    name: "تشيز كايك",
-                    description: "تشيز كايك كلاسيكي مع طبقة من التوت الطازج",
-                    price: 30,
-                    category: "desserts",
-                    image: "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    name: "دجاج كبسة",
+                    description: "وجبة دجاج كبسة شهية",
+                    price: 35,
+                    category: "chicken",
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     id: 4,
-                    name: "عصير ليمون بالنعناع",
-                    description: "عصير ليمون طازج مع أوراق النعناع",
-                    price: 15,
-                    category: "drinks",
-                    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    name: "دجاج حنيذ",
+                    description: "وجبة دجاج حنيذ مميزة",
+                    price: 35,
+                    category: "chicken",
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
+                // وجبات اللحم
                 {
                     id: 5,
-                    name: "برجر لحم",
-                    description: "برجر لحم مع جبنة شيدر، خس، طماطم، وصلصة خاصة",
-                    price: 40,
-                    category: "main",
-                    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    name: "لحم بخاري",
+                    description: "وجبة لحم بخاري مميزة",
+                    price: 50,
+                    category: "mutton",
+                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 },
                 {
                     id: 6,
-                    name: "سبرينغ رول",
-                    description: "سبرينغ رول مقرمش مع حشوة الخضار وصلصة الصويا",
-                    price: 28,
-                    category: "appetizers",
-                    image: "https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                    name: "لحم مكبوس",
+                    description: "وجبة لحم مكبوس شهية",
+                    price: 60,
+                    category: "mutton",
+                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 7,
+                    name: "لحم هاشي",
+                    description: "وجبة لحم هاشي لذيذة",
+                    price: 60,
+                    category: "mutton",
+                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 8,
+                    name: "لحم معصج",
+                    description: "وجبة لحم معصج مميزة",
+                    price: 60,
+                    category: "mutton",
+                    image: "https://images.unsplash.com/photo-1603360946369-dc9bb6258143?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                // وجبات الغنم الكاملة
+                {
+                    id: 9,
+                    name: "ذبيحة غوزي",
+                    description: "وجبة غنم كاملة غوزي",
+                    price: 800,
+                    category: "sheep",
+                    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 10,
+                    name: "ذبيحة مندي",
+                    description: "وجبة غنم كاملة مندي",
+                    price: 800,
+                    category: "sheep",
+                    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 11,
+                    name: "ذبيحة حنيذ",
+                    description: "وجبة غنم كاملة حنيذ",
+                    price: 800,
+                    category: "sheep",
+                    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 12,
+                    name: "جزري",
+                    description: "وجبة غنم كاملة جزري",
+                    price: 1500,
+                    category: "sheep",
+                    image: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                // المشروبات
+                {
+                    id: 13,
+                    name: "رز مندي",
+                    description: "رز مندي إضافي",
+                    price: 11,
+                    category: "drinks",
+                    image: "https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 14,
+                    name: "مشروبات غازية",
+                    description: "مشروبات غازية متنوعة",
+                    price: 4,
+                    category: "drinks",
+                    image: "https://images.unsplash.com/photo-1534057308991-b9b3a578f1b1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 15,
+                    name: "ماء صغير",
+                    description: "زجاجة ماء صغيرة",
+                    price: 3,
+                    category: "drinks",
+                    image: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                },
+                {
+                    id: 16,
+                    name: "ماء كبير",
+                    description: "زجاجة ماء كبيرة",
+                    price: 4,
+                    category: "drinks",
+                    image: "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                 }
             ];
 
@@ -423,15 +507,8 @@
             const confirmationDetails = document.getElementById('confirmation-details');
             const whatsappLink = document.getElementById('whatsapp-link');
 
-            // GitHub كقاعدة بيانات مؤقتة
-            const GITHUB_API = 'https://api.github.com';
-            const REPO_OWNER = 'YOUR_GITHUB_USERNAME'; // استبدل باسم مستخدم GitHub الخاص بك
-            const REPO_NAME = 'YOUR_REPO_NAME'; // استبدل باسم المستودع الخاص بك
-            const FILE_PATH = 'orders.json'; // ملف لتخزين الطلبات
-            const GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN'; // استبدل ب token GitHub الخاص بك
-
             // رقم واتساب للإشعارات
-            const WHATSAPP_NUMBER = '00971588155123'; // استبدل برقم واتساب الحقيقي
+            const WHATSAPP_NUMBER = '971588155123'; // الرقم المطلوب
 
             // عرض العناصر في القائمة
             function displayMenuItems() {
@@ -450,7 +527,7 @@
                             <h3>${item.name}</h3>
                             <p>${item.description}</p>
                             <div class="menu-item-price">
-                                <span class="price">${item.price} ر.س</span>
+                                <span class="price">${item.price} AED</span>
                                 <button class="add-to-cart" data-id="${item.id}">إضافة للسلة</button>
                             </div>
                         </div>
@@ -488,7 +565,7 @@
                 
                 if (cart.length === 0) {
                     orderItemsContainer.innerHTML = '<p>السلة فارغة</p>';
-                    totalAmountElement.textContent = '0.00 ر.س';
+                    totalAmountElement.textContent = '0.00 AED';
                     return;
                 }
                 
@@ -510,14 +587,14 @@
                             </div>
                         </div>
                         <div>
-                            <span>${itemTotal} ر.س</span>
+                            <span>${itemTotal} AED</span>
                             <span class="remove-item" data-id="${item.id}"><i class="fas fa-trash"></i></span>
                         </div>
                     `;
                     orderItemsContainer.appendChild(itemElement);
                 });
                 
-                totalAmountElement.textContent = `${total.toFixed(2)} ر.س`;
+                totalAmountElement.textContent = `${total.toFixed(2)} AED`;
                 
                 document.querySelectorAll('.minus').forEach(button => {
                     button.addEventListener('click', decreaseQuantity);
@@ -561,54 +638,9 @@
                 updateCart();
             }
 
-            // حفظ الطلب في GitHub
-            async function saveOrderToGitHub(orderData) {
-                try {
-                    // الحصول على محتوى الملف الحالي
-                    const getResponse = await fetch(`${GITHUB_API}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
-                        headers: {
-                            'Authorization': `token ${GITHUB_TOKEN}`,
-                            'Accept': 'application/vnd.github.v3+json'
-                        }
-                    });
-
-                    let currentContent = [];
-                    let sha = '';
-
-                    if (getResponse.ok) {
-                        const fileData = await getResponse.json();
-                        currentContent = JSON.parse(atob(fileData.content));
-                        sha = fileData.sha;
-                    }
-
-                    // إضافة الطلب الجديد
-                    currentContent.push(orderData);
-
-                    // تحديث الملف
-                    const updateResponse = await fetch(`${GITHUB_API}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Authorization': `token ${GITHUB_TOKEN}`,
-                            'Accept': 'application/vnd.github.v3+json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            message: 'Add new order',
-                            content: btoa(JSON.stringify(currentContent, null, 2)),
-                            sha: sha
-                        })
-                    });
-
-                    return updateResponse.ok;
-                } catch (error) {
-                    console.error('Error saving order to GitHub:', error);
-                    return false;
-                }
-            }
-
             // إرسال إشعار واتساب
             function sendWhatsAppNotification(orderDetails) {
-                const message = `طلب جديد من الطاولة ${orderDetails.tableNumber}:\n\n${orderDetails.items}\n\nالمجموع: ${orderDetails.total} ر.س`;
+                const message = `طلب جديد من الطاولة ${orderDetails.tableNumber}:\n\n${orderDetails.items}\n\nالمجموع: ${orderDetails.total} AED`;
                 const encodedMessage = encodeURIComponent(message);
                 const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
                 
@@ -632,52 +664,33 @@
                 let itemsText = '';
                 
                 cart.forEach(item => {
-                    orderDetails += `<li>${item.name} - ${item.quantity} × ${item.price} ر.س = ${item.quantity * item.price} ر.س</li>`;
-                    itemsText += `- ${item.name} (${item.quantity} × ${item.price} ر.س)\n`;
+                    orderDetails += `<li>${item.name} - ${item.quantity} × ${item.price} AED = ${item.quantity * item.price} AED</li>`;
+                    itemsText += `- ${item.name} (${item.quantity} × ${item.price} AED)\n`;
                 });
                 
                 const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-                orderDetails += `</ul><p><strong>المجموع: ${total.toFixed(2)} ر.س</strong></p>`;
+                orderDetails += `</ul><p><strong>المجموع: ${total.toFixed(2)} AED</strong></p>`;
                 orderDetails += `<p>شكراً لطلبك! سيتم تقديم طلبك قريباً.</p>`;
                 
                 confirmationDetails.innerHTML = orderDetails;
                 
                 // عرض حالة التحميل
-                submitOrderBtn.innerHTML = '<span class="loading"></span> جاري حفظ الطلب...';
+                submitOrderBtn.innerHTML = '<span class="loading"></span> جاري إرسال الطلب...';
                 submitOrderBtn.disabled = true;
                 
                 try {
-                    // حفظ الطلب في GitHub
-                    const orderData = {
+                    // إرسال إشعار واتساب
+                    sendWhatsAppNotification({
                         tableNumber: tableNumber,
-                        items: cart.map(item => ({
-                            id: item.id,
-                            name: item.name,
-                            quantity: item.quantity,
-                            price: item.price
-                        })),
-                        total: total,
-                        timestamp: new Date().toISOString()
-                    };
+                        items: itemsText,
+                        total: total.toFixed(2)
+                    });
                     
-                    const saved = await saveOrderToGitHub(orderData);
+                    modal.style.display = 'block';
                     
-                    if (saved) {
-                        // إرسال إشعار واتساب
-                        sendWhatsAppNotification({
-                            tableNumber: tableNumber,
-                            items: itemsText,
-                            total: total.toFixed(2)
-                        });
-                        
-                        modal.style.display = 'block';
-                        
-                        // إفراغ السلة بعد التأكيد
-                        cart = [];
-                        updateCart();
-                    } else {
-                        alert('حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
-                    }
+                    // إفراغ السلة بعد التأكيد
+                    cart = [];
+                    updateCart();
                 } catch (error) {
                     console.error('Error confirming order:', error);
                     alert('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.');
