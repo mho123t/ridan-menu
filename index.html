@@ -4,186 +4,680 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>قائمة طعام ريدان</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 20px;
+        :root {
+            --primary-color: #8B0000;
+            --secondary-color: #25D366;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333;
         }
+        
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            padding: 0;
+            color: var(--dark-gray);
+        }
+        
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             background-color: white;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
-        h1, h2 {
-            color: #8B0000;
+        
+        header {
             text-align: center;
-        }
-        .menu-section {
             margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--primary-color);
         }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+        
+        .menu-section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .menu-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
         .menu-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px dashed #ddd;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .item-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .item-details {
+            padding: 15px;
+        }
+        
         .item-name {
             font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
         }
+        
         .item-price {
-            color: #8B0000;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
         }
-        .whatsapp-btn {
-            display: block;
-            background-color: #25D366;
+        
+        .item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .add-to-cart {
+            background-color: var(--primary-color);
             color: white;
-            text-align: center;
-            padding: 15px;
-            margin: 20px auto;
+            border: none;
+            padding: 8px 15px;
             border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background-color: #6d0000;
+        }
+        
+        .new-badge {
+            background-color: green;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+        }
+        
+        /* سلة التسوق */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            left: -350px;
+            width: 350px;
+            height: 100%;
+            background-color: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            transition: left 0.3s;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .cart-sidebar.open {
+            left: 0;
+        }
+        
+        .cart-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .cart-items {
+            padding: 15px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item-name {
+            flex: 1;
+        }
+        
+        .cart-item-price {
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        
+        .cart-item-remove {
+            color: red;
+            cursor: pointer;
+        }
+        
+        .cart-total {
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.2rem;
+            border-top: 2px solid var(--primary-color);
+        }
+        
+        .checkout-form {
+            padding: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, 
+        .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        .checkout-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            background-color: #1da851;
+        }
+        
+        /* زر سلة التسوق */
+        .cart-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--secondary-color);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        /* زر الواتساب */
+        .whatsapp-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            width: 80%;
-            max-width: 300px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 999;
         }
-        .new-item {
-            color: green;
-            font-size: 0.8em;
+        
+        .whatsapp-btn i {
+            margin-left: 10px;
+            font-size: 1.2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .menu-items {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-sidebar {
+                width: 300px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>قائمة طعام ريدان</h1>
+        <header>
+            <img src="https://via.placeholder.com/150x80?text=Raydan+Logo" alt="شعار ريدان" class="logo">
+            <h1>قائمة طعام ريدان</h1>
+        </header>
         
         <div class="menu-section">
-            <h2>وجبات لحم الضأن</h2>
-            <div class="menu-item">
-                <span class="item-name">Mutton Bubhari</span>
-                <span class="item-price">50 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Zunblan</span>
-                <span class="item-price">60 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Mandi</span>
-                <span class="item-price">55 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Kabsa</span>
-                <span class="item-price">60 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Mohamed <span class="new-item">وجبة جديدة</span></span>
-                <span class="item-price">55 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Ooka / Mutton Makdoon</span>
-                <span class="item-price">55 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Maddon</span>
-                <span class="item-price">60 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Madghot</span>
-                <span class="item-price">60 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Madbi</span>
-                <span class="item-price">60 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Madbri</span>
-                <span class="item-price">60 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mutton Madjad</span>
-                <span class="item-price">60 AED</span>
+            <h2 class="section-title">وجبات لحم الضأن</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Mutton+Bubhari" alt="Mutton Bubhari" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Mutton Bubhari</div>
+                        <div class="item-price">50 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="1" data-name="Mutton Bubhari" data-price="50">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Mutton+Zunblan" alt="Mutton Zunblan" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Mutton Zunblan</div>
+                        <div class="item-price">60 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="2" data-name="Mutton Zunblan" data-price="60">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Mutton+Mandi" alt="Mutton Mandi" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Mutton Mandi</div>
+                        <div class="item-price">55 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="3" data-name="Mutton Mandi" data-price="55">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Mutton+Kabsa" alt="Mutton Kabsa" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Mutton Kabsa</div>
+                        <div class="item-price">60 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="4" data-name="Mutton Kabsa" data-price="60">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Mutton+Mohamed" alt="Mutton Mohamed" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Mutton Mohamed <span class="new-badge">جديد</span></div>
+                        <div class="item-price">55 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="5" data-name="Mutton Mohamed" data-price="55">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Mutton+Ooka" alt="Mutton Ooka" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Mutton Ooka / Mutton Makdoon</div>
+                        <div class="item-price">55 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="6" data-name="Mutton Ooka / Mutton Makdoon" data-price="55">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
         <div class="menu-section">
-            <h2>وجبات الدجاج</h2>
-            <div class="menu-item">
-                <span class="item-name">Chicken Maddox</span>
-                <span class="item-price">33 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Chicken Zorbian</span>
-                <span class="item-price">33 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Chicken Mandi</span>
-                <span class="item-price">33 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Chicken Mohamed</span>
-                <span class="item-price">33 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Chicken Maldoun</span>
-                <span class="item-price">33 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Chicken Madghot</span>
-                <span class="item-price">33 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Chicken Hanita</span>
-                <span class="item-price">35 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Raydan Maddoon Chicken</span>
-                <span class="item-price">35 AED</span>
+            <h2 class="section-title">وجبات الدجاج</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Chicken+Maddox" alt="Chicken Maddox" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Chicken Maddox</div>
+                        <div class="item-price">33 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="7" data-name="Chicken Maddox" data-price="33">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Chicken+Zorbian" alt="Chicken Zorbian" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Chicken Zorbian</div>
+                        <div class="item-price">33 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="8" data-name="Chicken Zorbian" data-price="33">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Chicken+Mandi" alt="Chicken Mandi" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Chicken Mandi</div>
+                        <div class="item-price">33 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="9" data-name="Chicken Mandi" data-price="33">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Chicken+Mohamed" alt="Chicken Mohamed" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Chicken Mohamed</div>
+                        <div class="item-price">33 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="10" data-name="Chicken Mohamed" data-price="33">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
         <div class="menu-section">
-            <h2>الحلويات والمقبلات</h2>
-            <div class="menu-item">
-                <span class="item-name">Cheese Kunafa</span>
-                <span class="item-price">15 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Mix Fatia</span>
-                <span class="item-price">16 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Arugula</span>
-                <span class="item-price">16 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Ratib</span>
-                <span class="item-price">15 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Malanwah</span>
-                <span class="item-price">15 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Fattotash</span>
-                <span class="item-price">17 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Arabic Salad</span>
-                <span class="item-price">15 AED</span>
-            </div>
-            <div class="menu-item">
-                <span class="item-name">Raddan Salad</span>
-                <span class="item-price">15 AED</span>
+            <h2 class="section-title">الحلويات والمقبلات</h2>
+            <div class="menu-items">
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Cheese+Kunafa" alt="Cheese Kunafa" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Cheese Kunafa</div>
+                        <div class="item-price">15 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="11" data-name="Cheese Kunafa" data-price="15">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Mix+Fatia" alt="Mix Fatia" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Mix Fatia</div>
+                        <div class="item-price">16 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="12" data-name="Mix Fatia" data-price="16">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Arugula" alt="Arugula" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Arugula</div>
+                        <div class="item-price">16 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="13" data-name="Arugula" data-price="16">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <img src="https://via.placeholder.com/300x200?text=Arabic+Salad" alt="Arabic Salad" class="item-image">
+                    <div class="item-details">
+                        <div class="item-name">Arabic Salad</div>
+                        <div class="item-price">15 AED</div>
+                        <div class="item-actions">
+                            <button class="add-to-cart" data-id="14" data-name="Arabic Salad" data-price="15">أضف للسلة</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <a href="https://wa.me/00971588155123?text=مرحباً، أريد طلب وجبة من ريدان" class="whatsapp-btn">
-            اطلب عبر واتساب <span style="font-size:1.2em">📱</span>
-        </a>
     </div>
+    
+    <!-- سلة التسوق -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>سلة التسوق</h3>
+            <button class="close-cart" id="closeCart">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- سيتم إضافة العناصر هنا عبر الجافاسكريبت -->
+        </div>
+        <div class="cart-total" id="cartTotal">
+            الإجمالي: 0 AED
+        </div>
+        <div class="checkout-form">
+            <div class="form-group">
+                <label for="tableNumber">رقم الطاولة</label>
+                <input type="text" id="tableNumber" placeholder="أدخل رقم الطاولة">
+            </div>
+            <div class="form-group">
+                <label for="notes">ملاحظات</label>
+                <textarea id="notes" rows="3" placeholder="أي ملاحظات خاصة بالطلب"></textarea>
+            </div>
+            <button class="checkout-btn" id="checkoutBtn">إتمام الطلب</button>
+        </div>
+    </div>
+    
+    <!-- زر سلة التسوق -->
+    <div class="cart-toggle" id="cartToggle">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+    
+    <!-- زر الواتساب -->
+    <a href="https://wa.me/00971588155123" class="whatsapp-btn">
+        <i class="fab fa-whatsapp"></i> طلب عبر واتساب
+    </a>
+    
+    <script>
+        // متغيرات سلة التسوق
+        let cart = [];
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartItemsContainer = document.getElementById('cartItems');
+        const cartTotalElement = document.getElementById('cartTotal');
+        const cartCountElement = document.getElementById('cartCount');
+        const cartToggle = document.getElementById('cartToggle');
+        const closeCart = document.getElementById('closeCart');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const tableNumberInput = document.getElementById('tableNumber');
+        const notesInput = document.getElementById('notes');
+        
+        // فتح/إغلاق سلة التسوق
+        cartToggle.addEventListener('click', () => {
+            cartSidebar.classList.add('open');
+        });
+        
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('open');
+        });
+        
+        // إضافة عنصر للسلة
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const price = parseFloat(button.getAttribute('data-price'));
+                
+                // التحقق إذا كان العنصر موجوداً بالفعل في السلة
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        quantity: 1
+                    });
+                }
+                
+                updateCart();
+                cartSidebar.classList.add('open');
+                
+                // تأثير عند الإضافة
+                button.textContent = 'تمت الإضافة ✓';
+                setTimeout(() => {
+                    button.textContent = 'أضف للسلة';
+                }, 2000);
+            });
+        });
+        
+        // تحديث سلة التسوق
+        function updateCart() {
+            // تفريغ السلة
+            cartItemsContainer.innerHTML = '';
+            
+            let total = 0;
+            
+            // إضافة العناصر الجديدة
+            cart.forEach(item => {
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">${item.price * item.quantity} AED</div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                    </div>
+                    <div class="cart-item-remove" data-id="${item.id}">&times;</div>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+                
+                total += item.price * item.quantity;
+            });
+            
+            // تحديث الإجمالي وعدد العناصر
+            cartTotalElement.textContent = `الإجمالي: ${total} AED`;
+            cartCountElement.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // إضافة أحداث للأزرار الجديدة
+            document.querySelectorAll('.quantity-btn.minus').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const item = cart.find(item => item.id === id);
+                    
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                    } else {
+                        cart = cart.filter(item => item.id !== id);
+                    }
+                    
+                    updateCart();
+                });
+            });
+            
+            document.querySelectorAll('.quantity-btn.plus').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    const item = cart.find(item => item.id === id);
+                    item.quantity += 1;
+                    updateCart();
+                });
+            });
+            
+            document.querySelectorAll('.cart-item-remove').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    cart = cart.filter(item => item.id !== id);
+                    updateCart();
+                });
+            });
+        }
+        
+        // إتمام الطلب
+        checkoutBtn.addEventListener('click', () => {
+            const tableNumber = tableNumberInput.value.trim();
+            const notes = notesInput.value.trim();
+            
+            if (cart.length === 0) {
+                alert('السلة فارغة، الرجاء إضافة عناصر قبل إتمام الطلب');
+                return;
+            }
+            
+            if (!tableNumber) {
+                alert('الرجاء إدخال رقم الطاولة');
+                return;
+            }
+            
+            // إنشاء رسالة الطلب
+            let message = `طلب جديد - طاولة رقم ${tableNumber}\n\n`;
+            message += 'تفاصيل الطلب:\n';
+            
+            cart.forEach(item => {
+                message += `${item.name} - ${item.quantity} x ${item.price} AED = ${item.quantity * item.price} AED\n`;
+            });
+            
+            message += `\nالإجمالي: ${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)} AED\n`;
+            
+            if (notes) {
+                message += `\nملاحظات: ${notes}`;
+            }
+            
+            // إرسال الطلب عبر واتساب
+            const whatsappUrl = `https://wa.me/00971588155123?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            
+            // إعادة تعيين السلة
+            cart = [];
+            updateCart();
+            tableNumberInput.value = '';
+            notesInput.value = '';
+            cartSidebar.classList.remove('open');
+            
+            alert('تم إرسال طلبك بنجاح! شكراً لاختياركم ريدان');
+        });
+    </script>
 </body>
 </html>
