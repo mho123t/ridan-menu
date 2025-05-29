@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قائمة الطعام الإلكترونية</title>
+    <title>Menu Raidan - قائمة الطعام</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
@@ -31,7 +31,7 @@
             margin-bottom: 30px;
             position: relative;
             padding: 20px;
-            background-color: #8b5a2b;
+            background-color: #2b8b5a;
             color: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -39,6 +39,11 @@
 
         header h1 {
             font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            font-size: 2rem;
             margin-bottom: 10px;
         }
 
@@ -84,7 +89,7 @@
         }
 
         .category-btn.active {
-            background-color: #8b5a2b;
+            background-color: #2b8b5a;
             color: white;
         }
 
@@ -120,7 +125,7 @@
         .menu-item h3 {
             font-size: 1.3rem;
             margin-bottom: 10px;
-            color: #5a3921;
+            color: #2b8b5a;
         }
 
         .menu-item p {
@@ -137,13 +142,13 @@
 
         .price {
             font-weight: bold;
-            color: #8b5a2b;
+            color: #2b8b5a;
             font-size: 1.2rem;
         }
 
         .add-to-cart {
             padding: 8px 15px;
-            background-color: #8b5a2b;
+            background-color: #2b8b5a;
             color: white;
             border: none;
             border-radius: 5px;
@@ -152,7 +157,7 @@
         }
 
         .add-to-cart:hover {
-            background-color: #6d4722;
+            background-color: #1f6542;
         }
 
         .order-summary {
@@ -165,7 +170,7 @@
 
         .order-summary h2 {
             margin-bottom: 20px;
-            color: #5a3921;
+            color: #2b8b5a;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -222,13 +227,13 @@
             font-weight: bold;
             margin: 20px 0;
             padding-top: 10px;
-            border-top: 2px solid #8b5a2b;
+            border-top: 2px solid #2b8b5a;
         }
 
         .submit-btn {
             width: 100%;
             padding: 15px;
-            background-color: #5a3921;
+            background-color: #2b8b5a;
             color: white;
             border: none;
             border-radius: 5px;
@@ -238,7 +243,7 @@
         }
 
         .submit-btn:hover {
-            background-color: #3d2615;
+            background-color: #1f6542;
         }
 
         .modal {
@@ -270,6 +275,20 @@
             cursor: pointer;
         }
 
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
             .menu-items {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -284,7 +303,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>مطعمنا الرائع</h1>
+            <div class="logo">🍽️ Menu Raidan</div>
+            <h1>قائمة الطعام الإلكترونية</h1>
             <div class="table-number">
                 <label for="table">رقم الطاولة:</label>
                 <select id="table">
@@ -330,6 +350,7 @@
             <span class="close">&times;</span>
             <h2>تم تأكيد طلبك!</h2>
             <p id="confirmation-details"></p>
+            <div id="whatsapp-link" style="margin-top: 20px;"></div>
             <button id="close-modal" class="submit-btn">حسناً</button>
         </div>
     </div>
@@ -400,6 +421,17 @@
             const closeModal = document.querySelector('.close');
             const closeModalBtn = document.getElementById('close-modal');
             const confirmationDetails = document.getElementById('confirmation-details');
+            const whatsappLink = document.getElementById('whatsapp-link');
+
+            // GitHub كقاعدة بيانات مؤقتة
+            const GITHUB_API = 'https://api.github.com';
+            const REPO_OWNER = 'YOUR_GITHUB_USERNAME'; // استبدل باسم مستخدم GitHub الخاص بك
+            const REPO_NAME = 'YOUR_REPO_NAME'; // استبدل باسم المستودع الخاص بك
+            const FILE_PATH = 'orders.json'; // ملف لتخزين الطلبات
+            const GITHUB_TOKEN = 'YOUR_GITHUB_TOKEN'; // استبدل ب token GitHub الخاص بك
+
+            // رقم واتساب للإشعارات
+            const WHATSAPP_NUMBER = '00971588155123'; // استبدل برقم واتساب الحقيقي
 
             // عرض العناصر في القائمة
             function displayMenuItems() {
@@ -426,7 +458,6 @@
                     menuItemsContainer.appendChild(itemElement);
                 });
 
-                // إضافة حدث النقر لزر الإضافة للسلة
                 document.querySelectorAll('.add-to-cart').forEach(button => {
                     button.addEventListener('click', addToCart);
                 });
@@ -488,7 +519,6 @@
                 
                 totalAmountElement.textContent = `${total.toFixed(2)} ر.س`;
                 
-                // إضافة أحداث للأزرار في السلة
                 document.querySelectorAll('.minus').forEach(button => {
                     button.addEventListener('click', decreaseQuantity);
                 });
@@ -531,8 +561,66 @@
                 updateCart();
             }
 
+            // حفظ الطلب في GitHub
+            async function saveOrderToGitHub(orderData) {
+                try {
+                    // الحصول على محتوى الملف الحالي
+                    const getResponse = await fetch(`${GITHUB_API}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+                        headers: {
+                            'Authorization': `token ${GITHUB_TOKEN}`,
+                            'Accept': 'application/vnd.github.v3+json'
+                        }
+                    });
+
+                    let currentContent = [];
+                    let sha = '';
+
+                    if (getResponse.ok) {
+                        const fileData = await getResponse.json();
+                        currentContent = JSON.parse(atob(fileData.content));
+                        sha = fileData.sha;
+                    }
+
+                    // إضافة الطلب الجديد
+                    currentContent.push(orderData);
+
+                    // تحديث الملف
+                    const updateResponse = await fetch(`${GITHUB_API}/repos/${REPO_OWNER}/${REPO_NAME}/contents/${FILE_PATH}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${GITHUB_TOKEN}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: 'Add new order',
+                            content: btoa(JSON.stringify(currentContent, null, 2)),
+                            sha: sha
+                        })
+                    });
+
+                    return updateResponse.ok;
+                } catch (error) {
+                    console.error('Error saving order to GitHub:', error);
+                    return false;
+                }
+            }
+
+            // إرسال إشعار واتساب
+            function sendWhatsAppNotification(orderDetails) {
+                const message = `طلب جديد من الطاولة ${orderDetails.tableNumber}:\n\n${orderDetails.items}\n\nالمجموع: ${orderDetails.total} ر.س`;
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+                
+                whatsappLink.innerHTML = `
+                    <a href="${whatsappUrl}" target="_blank" class="submit-btn" style="display: block; text-align: center; text-decoration: none;">
+                        <i class="fab fa-whatsapp"></i> إرسال إشعار عبر واتساب
+                    </a>
+                `;
+            }
+
             // تأكيد الطلب
-            function confirmOrder() {
+            async function confirmOrder() {
                 const tableNumber = document.getElementById('table').value;
                 
                 if (cart.length === 0) {
@@ -541,9 +629,11 @@
                 }
                 
                 let orderDetails = `<p>رقم الطاولة: ${tableNumber}</p><ul>`;
+                let itemsText = '';
                 
                 cart.forEach(item => {
                     orderDetails += `<li>${item.name} - ${item.quantity} × ${item.price} ر.س = ${item.quantity * item.price} ر.س</li>`;
+                    itemsText += `- ${item.name} (${item.quantity} × ${item.price} ر.س)\n`;
                 });
                 
                 const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -551,11 +641,50 @@
                 orderDetails += `<p>شكراً لطلبك! سيتم تقديم طلبك قريباً.</p>`;
                 
                 confirmationDetails.innerHTML = orderDetails;
-                modal.style.display = 'block';
                 
-                // إفراغ السلة بعد التأكيد
-                cart = [];
-                updateCart();
+                // عرض حالة التحميل
+                submitOrderBtn.innerHTML = '<span class="loading"></span> جاري حفظ الطلب...';
+                submitOrderBtn.disabled = true;
+                
+                try {
+                    // حفظ الطلب في GitHub
+                    const orderData = {
+                        tableNumber: tableNumber,
+                        items: cart.map(item => ({
+                            id: item.id,
+                            name: item.name,
+                            quantity: item.quantity,
+                            price: item.price
+                        })),
+                        total: total,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    const saved = await saveOrderToGitHub(orderData);
+                    
+                    if (saved) {
+                        // إرسال إشعار واتساب
+                        sendWhatsAppNotification({
+                            tableNumber: tableNumber,
+                            items: itemsText,
+                            total: total.toFixed(2)
+                        });
+                        
+                        modal.style.display = 'block';
+                        
+                        // إفراغ السلة بعد التأكيد
+                        cart = [];
+                        updateCart();
+                    } else {
+                        alert('حدث خطأ أثناء حفظ الطلب. يرجى المحاولة مرة أخرى.');
+                    }
+                } catch (error) {
+                    console.error('Error confirming order:', error);
+                    alert('حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.');
+                } finally {
+                    submitOrderBtn.innerHTML = 'تأكيد الطلب';
+                    submitOrderBtn.disabled = false;
+                }
             }
 
             // تصفية العناصر حسب التصنيف
